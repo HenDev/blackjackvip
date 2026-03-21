@@ -1,0 +1,119 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf510
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red132\green221\blue253;\red204\green0\blue203;\red0\green0\blue255;
+\red51\green153\blue0;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww26700\viewh12400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\f0\fs24 \cf0 * Activate run in background from player setting\
+\
+1. call Initialize at start of game\
+\pard\pardeftab720
+
+\f1 \cf0 \cb2 ExternalInterfaceHandler.Instance.SendRequest(eEXTERNAL_REQ_TYPE.Initialize,\cf3 ""\cf0 ,\cf3 null\cf0 );\cb1 \
+2. Before loading InApp Page just call start loading screen and call back for inApp data..Disable current Screen buttons.\
+\cb2 ExternalInterfaceHandler.Instance.SendRequest(eEXTERNAL_REQ_TYPE.StartLoadingScreen,\cf3 ""\cf0 ,\cf3 null\cf0 );\
+			ExternalInterfaceHandler.Instance.SendRequest(eEXTERNAL_REQ_TYPE.GetInAppData,\cf3 ""\cf0 ,GetInAppData);\cb1 \
+\
+3. check GetInApp Function response..\
+\pard\pardeftab720
+\cf4 \
+\cb2 void\cf0  GetInAppData(eEXTERNAL_REQ_TYPE reqType , \cf4 string\cf0  requestedId , \cf4 string\cf0  receivedStatus)\
+	\{\
+		\cf4 Debug\cf0 .Log(\cf3 "GetInAppData()....Data Received_"\cf0 +receivedStatus);\
+		\
+		\cf4 switch\cf0 (reqType)\
+		\{\
+			\cf4 case\cf0  eEXTERNAL_REQ_TYPE.GetInAppData:\
+			\cf4 if\cf0 (receivedStatus == \cf3 "true"\cf0 )\
+			\{\
+				\cf5 // update currency gui text with stored player prefs string type.\
+\pard\pardeftab720
+\cf0 				\cf5 // enable current screen button.\
+\cf0 				\cf5 // use "kimberley Dynamic" for currency value available in resource folder.\
+\cf0 			\}\
+			\cf4 else\
+\cf0 			\{\
+				\cf5 // enable all button except inapp purchase button.\
+\cf0 				\cf5 // leave currency value empty.\
+\cf0 			\}\
+			ExternalInterfaceHandler.Instance.SendRequest(eEXTERNAL_REQ_TYPE.StopLoadingScreen,\cf3 ""\cf0 ,\cf3 null\cf0 );\
+			\cf4 break\cf0 ;\
+		\cf4 default\cf0 :\
+			\cf4 Debug\cf0 .Log(\cf3 "GetInAppData()....Invalid received Data"\cf0 );\
+			break;\
+		\}\
+	\}\cb1 \
+\
+4. inApp purchase button click\'85\
+disable current screen button before calling these lines...\
+\
+\cb2 ExternalInterfaceHandler.Instance.SendRequest(eEXTERNAL_REQ_TYPE.StartLoadingScreen,\cf3 ""\cf0 ,\cf3 null\cf0 );\
+			ExternalInterfaceHandler.Instance.SendRequest(eEXTERNAL_REQ_TYPE.InAppConsumable,\cf3 "1"\cf0 ,InAppPurchase);\cb1 \
+\
+5. after call received for inApp..\
+\pard\pardeftab720
+\cf4 \
+\cb2 void\cf0  InAppPurchase(eEXTERNAL_REQ_TYPE reqType , \cf4 string\cf0  requestedId , \cf4 string\cf0  receivedStatus)\
+	\{\
+		\cf4 Debug\cf0 .Log(\cf3 "InAppPurchase().....Data Received..."\cf0 +receivedStatus);\
+		\
+		\cf4 switch\cf0 (reqType)\
+		\{\
+		\cf4 case\cf0  eEXTERNAL_REQ_TYPE.InAppConsumable:\
+			\cf4 if\cf0 (receivedStatus == \cf3 "true"\cf0 )\
+			\{\
+				\cf4 switch\cf0 (requestedId)\
+				\{\
+					\cf4 case\cf0  \cf3 "1"\cf0 :\
+					\cf4 Debug\cf0 .Log(\cf3 "InAppConsumable: Request 1 completed"\cf0 );\
+					\cf4 break\cf0 ;\
+					\cf4 case\cf0  \cf3 "2"\cf0 :\
+					\cf4 Debug\cf0 .Log(\cf3 "InAppConsumable: Request 2 completed"\cf0 );\
+					\cf4 break\cf0 ;\
+					\cf4 case\cf0  \cf3 "3"\cf0 :\
+					\cf4 break\cf0 ;\
+				\}\
+			\}\
+			\cf4 else\
+\pard\pardeftab720
+\cf0 			\{\
+				\cf5 // purchase failed..\
+\cf0 			\}\
+			\cf5 // enable current screen button\
+\cf0 			ExternalInterfaceHandler.Instance.SendRequest(eEXTERNAL_REQ_TYPE.StopLoadingScreen,\cf3 ""\cf0 ,\cf3 null\cf0 );\
+\
+			\cf4 break\cf0 ;\
+		\cf4 case\cf0  eEXTERNAL_REQ_TYPE.InAppNonConsumable:\
+			\cf4 if\cf0 (receivedStatus == \cf3 "true"\cf0 )\
+			\{\
+				\cf4 switch\cf0 (requestedId)\
+				\{\
+					\cf4 case\cf0  \cf3 "1"\cf0 :\
+					\cf4 Debug\cf0 .Log(\cf3 "InAppNonConsumable: Request 1 completed"\cf0 );\
+					\cf4 break\cf0 ;\
+					\cf4 case\cf0  \cf3 "2"\cf0 :\
+					\cf4 Debug\cf0 .Log(\cf3 "InAppNonConsumable: Request 1 completed"\cf0 );\
+					\cf4 break\cf0 ;\
+					\cf4 case\cf0  \cf3 "3"\cf0 :\
+					\cf4 break\cf0 ;\
+				\}\
+			\}\
+			\cf4 else\
+\cf0 			\{\
+				\cf5 // purchase failed.\
+\cf0 			\}\
+			\cf5 // enable current screen button\
+\cf0 			ExternalInterfaceHandler.Instance.SendRequest(eEXTERNAL_REQ_TYPE.StopLoadingScreen,\cf3 ""\cf0 ,\cf3 null\cf0 );\
+\
+			\
+			\cf4 break\cf0 ;\
+		\cf4 default\cf0 :\
+			\cf4 Debug\cf0 .Log(\cf3 "InAppPurchase()....Invalid received Data"\cf0 );\
+			\cf4 break\cf0 ;\
+			\
+		\}\
+		\
+	\}\
+\cb1 \
+}
