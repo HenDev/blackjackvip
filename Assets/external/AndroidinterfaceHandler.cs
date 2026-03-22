@@ -5,91 +5,121 @@ using System.Collections;
 public class AndroidinterfaceHandler : ExternalInterfaceHandler 
 {
 	#if UNITY_ANDROID
-	public static AndroidJavaClass javaClass = new AndroidJavaClass("com.dumadugames.unityandroid.JarClass");
+	//public static AndroidJavaClass javaClass = new AndroidJavaClass("com.dumadugames.unityandroid.JarClass");
 	
-	public static AndroidJavaObject getCurrentActivity () {
+	/*public static AndroidJavaObject getCurrentActivity () {
 		AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
 		return unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-	}
+	}*/
 	
 	
 	public static void _SendInAppRequest(bool isConsumable , int itemId) {
+		/*
 		javaClass.CallStatic("purchaseItem", isConsumable, itemId, getCurrentActivity());
+	*/
 	}
 	
 	public static void _FullScreenAds() {
+		/*
 		javaClass.CallStatic("showIntrestitial", getCurrentActivity());
+	*/
 	}
 	
 	public static void _BannerAds(bool isVisible,bool isOnTop) {
-		if(isVisible) {
+		/*if(isVisible) {
 			javaClass.CallStatic("showBanner", isOnTop, getCurrentActivity());
 		}
 		else {
 			javaClass.CallStatic("hideBanner", isOnTop, getCurrentActivity());
-		}
+		}*/
 	}
 	
 	public static void _SendScore(int id, int score) {
+		/*
 		javaClass.CallStatic("submitScore", id, score, getCurrentActivity());
+	*/
 	}
 	
 	public static void _SendScore(int id, float score) {
+		/*
 		javaClass.CallStatic("submitScore", id, score, getCurrentActivity());
+	*/
 	}
 	
 	public static void _SendAchievement(string id) {
+		/*
 		javaClass.CallStatic("unlockAchievement", id , getCurrentActivity());
+	*/
 	}
 	
 	
 	
 	public static void _SendAchievement(string id, int status) {
+		/*
 		javaClass.CallStatic("incrementAchievement", id, status, getCurrentActivity());
+	*/
 	}
 	
 	public static void _ShowScores() {
+		/*
 		javaClass.CallStatic("showLeaderBoards", getCurrentActivity());
+	*/
 	}
 	
 	public static void _ShowAchievements() {
+		/*
 		javaClass.CallStatic("showAchievements", getCurrentActivity());
+	*/
 	}
 	
-	public static void _ShowPopUp(string title, string msg , bool isQuitRequested) {
+	public static void _ShowPopUp(string title, string msg , bool isQuitRequested) {/*
 		if(isQuitRequested)
 			javaClass.CallStatic("showExitPopUp", getCurrentActivity());
 		else
-			javaClass.CallStatic("showPopUp", title, msg, getCurrentActivity());
+			javaClass.CallStatic("showPopUp", title, msg, getCurrentActivity());*/
 	}
 	
 	public static void _RateApp() {
+		/*
 		javaClass.CallStatic("rateApp", getCurrentActivity());
+	*/
 	}
 	
 	public static void _SubmitFlurryEvent(string key) {
+		/*
 		javaClass.CallStatic("submitFlurryEvent", key, getCurrentActivity());
+	*/
 	}	
 	
 	public static void _FaceBook() {
+		/*
 		javaClass.CallStatic("like", getCurrentActivity());
+	*/
 	}	
 	
 	public static void _Twitter() {
+		/*
 		javaClass.CallStatic("follow", getCurrentActivity());
+	*/
 	}	
 	
 	public static void _MoreGames() {
+		/*
 		javaClass.CallStatic("moreGames", getCurrentActivity());
+	*/
 	}
 	
 	public static void _LocalNotification(string date, string msg, int classId) {
+		/*
 		javaClass.CallStatic("localNotification", date, msg, classId, getCurrentActivity());
+	*/
 	}
 	
 	public static void _CancelAllLocalNotifications()
 	{
+		/*
 		javaClass.CallStatic("cancellocalNotification", true, getCurrentActivity());
+	*/
 	}
 	
 	#endif
