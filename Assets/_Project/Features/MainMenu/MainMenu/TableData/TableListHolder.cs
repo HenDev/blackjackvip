@@ -35,8 +35,37 @@ public class TableListHolder : TouchHandlerDelegate {
 	
 	void init()
 	{
-		float yOffset = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(2.0f, 0.0f, -1.0f, 4.0f, 4.5f, 3.0f, 1.0f, 4.5f, 5.5f);
-		mTableDataTouchOffset = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(13.0f, 11.0f, 10.0f, 15.0f, 16.0f, 14.0f, 12.0f, 16.0f, 18.0f);
+		float yOffset = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+			13.0f,   
+			12.0f,   
+			11.0f,   
+			10.5f,  
+			10.0f,  
+			9.5f,  
+			9.0f,   
+			5.5f,
+			5.0f,  
+			4.5f, 
+			3.0f,  
+			2.0f, 
+			1.0f   
+		);
+		mTableDataTouchOffset = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+			25.0f,  
+			24.0f, 
+			23.0f, 
+			22.0f, 
+			21.0f, 
+			20.5f,  
+			20.0f,  
+			15.0f,  
+			15.0f,  
+			14.0f,  
+			13.0f,  
+			12.0f, 
+			11.0f   
+		);
+
 		minHolderPosition += new Vector3(0, yOffset, 0);
 		maxHolderPosition -= new Vector3(0, yOffset, 0);		
 		
@@ -53,7 +82,6 @@ public class TableListHolder : TouchHandlerDelegate {
 	// Touch Delegates
 	public override bool touchBegan (Vector3 position)
 	{
-//		Debug.Log("position : "+(position.y + 0.6f) + " offset : "+mTableDataTouchOffset);
 		if(!isTableListActive || Mathf.Abs(position.y + 0.6f) > mTableDataTouchOffset) return false;		
 		
 		initHolderPosition = transform.position;

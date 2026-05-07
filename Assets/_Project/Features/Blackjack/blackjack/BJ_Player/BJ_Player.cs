@@ -46,11 +46,60 @@ public class BJ_Player : MonoBehaviour {
 	
 	public void createPlayer()
 	{	
-		float yPos = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(2.0f, 0.0f, -2.0f, 4.5f, 4.5f, 2.0f, 1.0f, 4.5f, 5.5f);
+		float yPos = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+			5.8f,   
+			5.6f,   
+			5.5f,  
+			4.5f,  
+			4.4f,  
+			4.2f,   
+			4.0f,  
+			2.0f,  
+			0.0f,   
+			-2.0f,  
+			2.0f,   
+			1.0f,   
+			0.0f   
+		);
+
+		//float yPos = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(2.0f, 0.0f, -2.0f, 4.5f, 4.5f, 2.0f, 1.0f, 4.5f, 5.5f);
 		mPlayerEndPosition.position -= new Vector3(0,yPos,0);
 		mDealerEndPosition.position += new Vector3(0,yPos,0);
-		mInsurancePosition.position += new Vector3(0,MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(1,1,Loading.IsAdsRemoved?1:0,2,3,Loading.IsAdsRemoved?2:1,1,3,4.0f),0);		
-		transform.position += new Vector3(0,MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(0,0,0,1,1,0,0,1,2.0f),0);		
+		mInsurancePosition.position += new Vector3(0,
+			MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+				4.2f,   
+				4.0f,   
+				4.0f,   
+				3.0f,
+				2.8f,  
+				2.5f,
+				2.0f,  
+				1.0f,
+				1.0f, 
+				Loading.IsAdsRemoved ? 1.0f : 0.0f, 
+				Loading.IsAdsRemoved ? 2.0f : 1.0f, 
+				1.0f,   
+				1.0f    
+			), 0);
+		transform.position += new Vector3(0,
+			MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+				2.2f,  
+				2.1f,  
+				2.0f,  
+				1.0f,
+				1.0f,  
+				0.8f,
+				0.5f,  
+				0.0f,  
+				0.0f,  
+				0.0f,
+				0.0f,  
+				0.0f, 
+				0.0f   
+			), 0);
+
+		//mInsurancePosition.position += new Vector3(0,MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(1,1,Loading.IsAdsRemoved?1:0,2,3,Loading.IsAdsRemoved?2:1,1,3,4.0f),0);		
+		//transform.position += new Vector3(0,MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(0,0,0,1,1,0,0,1,2.0f),0);		
 		
 		createPlayerBetHolder();
 		//mPlayerBetChips = CommonData.createEmptyGameObject("PlacedChipsHolder", gameObject, Vector3.zero);

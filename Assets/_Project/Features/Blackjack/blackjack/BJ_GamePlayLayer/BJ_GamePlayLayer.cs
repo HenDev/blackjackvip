@@ -38,9 +38,41 @@ public class BJ_GamePlayLayer : MonoBehaviour {
 		{
 			yield return new WaitForSeconds(0.1f);
 			
-			float yPosOffset = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(2.0f, 0.0f, -1.0f, 4.0f, 5.0f, 3.0f, 1.0f, 5.0f, 6.0f);
+			float yPosOffset = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+				6.2f,   
+				6.1f,   
+				6.0f,  
+				5.0f,   
+				4.8f,  
+				4.5f,   
+				4.0f,   
+				2.0f,   
+				0.0f,   
+				-1.0f, 
+				2.0f,  
+				1.0f,  
+				0.0f    
+			);
+
+			//float yPosOffset = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(2.0f, 0.0f, -1.0f, 4.0f, 5.0f, 3.0f, 1.0f, 5.0f, 6.0f);
 			CasinoCard_Shoe.mIntance.gameObject.transform.position += new Vector3(0, yPosOffset, 0);			
-			yPosOffset = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(4.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f, 3.5f, 4.0f, 4.0f);
+			yPosOffset = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+				4.3f,   
+				4.2f,   
+				4.0f,  
+				4.0f,   
+				4.0f,   
+				4.0f,   
+				4.0f,   
+				4.0f,  
+				3.0f,  
+				4.0f,  
+				4.0f,   
+				3.5f,   
+				3.0f   
+			);
+																									//  2:3, 3:4, 4:5, 9:15, 9:16, 10:16, 11:16, 19.5:9, 20:9 Pro
+			//yPosOffset = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(4.0f, 3.0f, 4.0f, 4.0f, 4.0f, 4.0f, 3.5f, 4.0f, 4.0f);
 			if(!Loading.IsAdsRemoved) CasinoCard_Shoe.mIntance.gameObject.transform.position += new Vector3(0, -yPosOffset, 0);				
 			
 			// Creating Player

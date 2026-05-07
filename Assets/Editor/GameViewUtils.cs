@@ -5,134 +5,35 @@ using UnityEngine;
 
 public static class GameViewUtils
 {
-    private static readonly (string label, int width, int height)[] IOSPortraitResolutions =
-    {
-        ("01 - 640x1136", 640, 1136),
-        ("02 - 750x1334", 750, 1334),
-        ("03 - 768x1024", 768, 1024),
-        ("04 - 828x1792", 828, 1792),
-        ("05 - 1080x1920", 1080, 1920),
-        ("06 - 1080x2340", 1080, 2340),
-        ("07 - 1125x2436", 1125, 2436),
-        ("08 - 1170x2532", 1170, 2532),
-        ("09 - 1179x2556", 1179, 2556),
-        ("10 - 1242x2688", 1242, 2688),
-        ("11 - 1284x2778", 1284, 2778),
-        ("12 - 1290x2796", 1290, 2796),
-        ("13 - 1488x2266", 1488, 2266),
-        ("14 - 1536x2048", 1536, 2048),
-        ("15 - 1620x2160", 1620, 2160),
-        ("16 - 1640x2360", 1640, 2360),
-        ("17 - 1668x2224", 1668, 2224),
-        ("18 - 1668x2388", 1668, 2388),
-        ("19 - 2048x2732", 2048, 2732),
-    };
+   
 
-    // Android categories
-    private static readonly (string label, int width, int height)[] AndroidBudgetResolutions =
+    private static readonly (string label, int width, int height)[] AspectRatioResolutions =
     {
-        ("A01 - 720x1600", 720, 1600),
-        ("A02 - 1080x2340", 1080, 2340),
-        ("A03 - 1080x2388", 1080, 2388),
-        ("A04 - 1080x2424", 1080, 2424),
-        ("A05 - 1440x3120", 1440, 3120),
-        ("B01 - 720x1600", 720, 1600),
-        ("B02 - 720x1612", 720, 1612),
-        ("B03 - 720x1650", 720, 1650),
-        ("B04 - 720x1680", 720, 1680),
-    };
+        ("22:9 - 900x2200", 900, 2200),
+        ("21:9 - 900x2100", 900, 2100),
+        ("20:9 - 900x2000", 900, 2000),
+        ("19.5:9 - 900x1950", 900, 1950),
+        ("19:9 - 900x1900", 900, 1900),
+        ("18.5:9 - 900x1850", 900, 1850),
+        ("18:9 - 900x1800", 900, 1800),
+        ("16:9 - 1080x1920", 1080, 1920),
+        ("5:3 - 900x1500", 900, 1500),
+        ("16:10 - 1200x1920", 1200, 1920),
+        ("3:2 - 1000x1500", 1000, 1500),
+        ("10:7 - 700x1000", 700, 1000),
+        ("4:3 - 1200x1600", 1200, 1600),
 
-    private static readonly (string label, int width, int height)[] AndroidMidrangeResolutions =
-    {
-        ("M01 - 1080x2340", 1080, 2340),
-        ("M02 - 1080x2400", 1080, 2400),
-        ("M03 - 1080x2388", 1080, 2388),
-        ("M04 - 1080x2412", 1080, 2412),
     };
-
-    private static readonly (string label, int width, int height)[] AndroidFlagshipResolutions =
-    {
-        ("F01 - 1080x2424", 1080, 2424),
-        ("F02 - 1260x2800", 1260, 2800),
-        ("F03 - 1440x3088", 1440, 3088),
-        ("F04 - 1440x3120", 1440, 3120),
-    };
-
-    private static readonly (string label, int width, int height)[] AndroidFoldableResolutions =
-    {
-        ("D01 - Fold Cover 904x2316", 904, 2316),
-        ("D02 - Fold Cover 968x2376", 968, 2376),
-        ("D03 - Fold Inner 1812x2176", 1812, 2176),
-        ("D04 - Fold Inner 1840x2208", 1840, 2208),
-    };
+ 
 
     private static readonly (string label, int width, int height)[] AndroidAllResolutions =
         Concat(
-            AndroidBudgetResolutions,
-            AndroidMidrangeResolutions,
-            AndroidFlagshipResolutions,
-            AndroidFoldableResolutions
+            AspectRatioResolutions 
         );
+ 
 
-    [MenuItem("Tools/Game View/Add iOS/19 Portrait Resolutions")]
-    public static void AddAllIOSPortraitResolutions()
-    {
-        AddResolutionSet(GameViewSizeGroupType.Android, IOSPortraitResolutions, "iOS");
-    }
-
-    [MenuItem("Tools/Game View/Remove iOS/19 Portrait Resolutions")]
-    public static void RemoveAllIOSPortraitResolutions()
-    {
-        RemoveResolutionSet(GameViewSizeGroupType.Android, IOSPortraitResolutions, "iOS");
-    }
-
-    [MenuItem("Tools/Game View/Add Android/Budget")]
-    public static void AddAndroidBudgetResolutions()
-    {
-        AddResolutionSet(GameViewSizeGroupType.Android, AndroidBudgetResolutions, "Android Budget");
-    }
-
-    [MenuItem("Tools/Game View/Remove Android/Budget")]
-    public static void RemoveAndroidBudgetResolutions()
-    {
-        RemoveResolutionSet(GameViewSizeGroupType.Android, AndroidBudgetResolutions, "Android Budget");
-    }
-
-    [MenuItem("Tools/Game View/Add Android/Midrange")]
-    public static void AddAndroidMidrangeResolutions()
-    {
-        AddResolutionSet(GameViewSizeGroupType.Android, AndroidMidrangeResolutions, "Android Midrange");
-    }
-
-    [MenuItem("Tools/Game View/Remove Android/Midrange")]
-    public static void RemoveAndroidMidrangeResolutions()
-    {
-        RemoveResolutionSet(GameViewSizeGroupType.Android, AndroidMidrangeResolutions, "Android Midrange");
-    }
-
-    [MenuItem("Tools/Game View/Add Android/Flagship")]
-    public static void AddAndroidFlagshipResolutions()
-    {
-        AddResolutionSet(GameViewSizeGroupType.Android, AndroidFlagshipResolutions, "Android Flagship");
-    }
-
-    [MenuItem("Tools/Game View/Remove Android/Flagship")]
-    public static void RemoveAndroidFlagshipResolutions()
-    {
-        RemoveResolutionSet(GameViewSizeGroupType.Android, AndroidFlagshipResolutions, "Android Flagship");
-    }
-
-    [MenuItem("Tools/Game View/Add Android/Foldable")]
-    public static void AddAndroidFoldableResolutions()
-    {
-        AddResolutionSet(GameViewSizeGroupType.Android, AndroidFoldableResolutions, "Android Foldable");
-    }
-
-    [MenuItem("Tools/Game View/Remove Android/Foldable")]
-    public static void RemoveAndroidFoldableResolutions()
-    {
-        RemoveResolutionSet(GameViewSizeGroupType.Android, AndroidFoldableResolutions, "Android Foldable");
-    }
+ 
+ 
 
     [MenuItem("Tools/Game View/Add Android/All Categories")]
     public static void AddAllAndroidPortraitResolutions()
@@ -145,20 +46,8 @@ public static class GameViewUtils
     {
         RemoveResolutionSet(GameViewSizeGroupType.Android, AndroidAllResolutions, "Android All");
     }
-
-    [MenuItem("Tools/Game View/Add All/iOS + Android")]
-    public static void AddAllPresets()
-    {
-        AddAllIOSPortraitResolutions();
-        AddAllAndroidPortraitResolutions();
-    }
-
-    [MenuItem("Tools/Game View/Remove All/iOS + Android")]
-    public static void RemoveAllPresets()
-    {
-        RemoveAllIOSPortraitResolutions();
-        RemoveAllAndroidPortraitResolutions();
-    }
+ 
+ 
 
     private static void AddResolutionSet(GameViewSizeGroupType groupType, (string label, int width, int height)[] sizes, string groupName)
     {

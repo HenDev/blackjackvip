@@ -20,9 +20,23 @@ public class AndroidinterfaceHandler : ExternalInterfaceHandler
 	}
 	
 	public static void _FullScreenAds() {
-		/*
-		javaClass.CallStatic("showIntrestitial", getCurrentActivity());
-	*/
+		AdsManager adsManager = UnityEngine.Object.FindFirstObjectByType<AdsManager>();
+		if (adsManager == null)
+		{
+			GameObject mobileManager = GameObject.Find("MobileManager");
+			if (mobileManager != null)
+			{
+				adsManager = mobileManager.GetComponent<AdsManager>();
+			}
+		}
+
+		if (adsManager == null)
+		{
+			Debug.LogWarning("AndroidinterfaceHandler: AdsManager not found. Interstitial request ignored.");
+			return;
+		}
+
+		adsManager.ShowInterstitial();
 	}
 	
 	public static void _BannerAds(bool isVisible,bool isOnTop) {

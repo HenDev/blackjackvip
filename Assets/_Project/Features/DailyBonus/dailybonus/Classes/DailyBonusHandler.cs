@@ -54,10 +54,18 @@ public class DailyBonusHandler : MonoBehaviour {
 	private int remainingSpins = 1;
 	private int spinRewards = 0;
 	
+	public bool triggerDailyBonus = false;
+	
 	// Use this for initialization
 	void Start () { mInstance = this; alphaLayer.fadeOutAlphaLayer(0.01f); }	
 	// Update is called once per frame
-	void Update () { }
+	void Update () {
+		if (triggerDailyBonus)
+		{
+			triggerDailyBonus = false;
+			createAndShowDailyBonus();
+		}
+	}
 	
 	void Awake()
 	{
@@ -149,8 +157,8 @@ public class DailyBonusHandler : MonoBehaviour {
 		mTotalBonusText.text = "0";
 		
 		mClaimBonusButton = MenuButtonManager.sharedManager().createMenuItem("Button_ClaimBonus.png", "Button_ClaimBonus_Pressed.png", "", "", 0, mSpriteManager, mSpriteAtlasDataHandler, claimBonusSelected);
-		mClaimBonusButton.addParent(gameObject);
-		mClaimBonusButton.setPosition(new Vector3(-20.0f,-15.0f,0));
+		mClaimBonusButton.addParent(gameObject); 
+		mClaimBonusButton.setPosition(new Vector3(-20.0f,-17.8f,0));
 		mClaimBonusButton.gameObject.layer = gameObject.layer;
 		mClaimBonusButton.setTouchEnable(false);
 				
@@ -161,7 +169,7 @@ public class DailyBonusHandler : MonoBehaviour {
 	
 	void createSpinWheel()
 	{
-		mSpinWheelObject = (GameObject)Instantiate(SpinWheelPrefab);//, new Vector3(0,1.0f,5), Quaternion.identity);
+		mSpinWheelObject = (GameObject)Instantiate(SpinWheelPrefab); 
 		mSpinWheelObject.layer = gameObject.layer;
 		mSpinWheelObject.transform.parent = mDailyBonusBG.transform;
 		mSpinWheelObject.transform.position = mDailyBonusBG.transform.position + new Vector3(0, 3.3f, -1);

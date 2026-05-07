@@ -13,24 +13,24 @@ public class MainMenuLayer : MonoBehaviour
 
 	public AlphaLayerHandler mAlphaLayer = null;
  
+	public GameObject mTittle;
 	MenuButton mStatsButton = null;
 	MenuButton mScoreButton = null;
-
 	MenuButton mAchievementsButton = null;
-
 //	MenuButton mFaceBookButton = null;
 	MenuButton mSettingsButton = null;
 
 	bool isSettingsExpanded = false;
 	float settingExpandCollapseDuration = 0.1f;
 
-		
 	public		float TopBarYPositionOffset = 0.1f;
 	public		float yPos = 0.1f;
 	public		float yPosGap = 0.1f;
 	public	float buttonScale = 0.1f;
 	public float xPosLeft = -10.0f;
 	public float xPosRight = 10.0f;
+	public float uiScale = 1.0f;
+	public GameObject dailyBonus;
 
 // Use this for initialization
 	void Start () { mInstance = this; PlayAudioSounds.sharedHandler().playBgMusic("MenuTune"); StartCoroutine(Instantiate()); }
@@ -61,22 +61,120 @@ public class MainMenuLayer : MonoBehaviour
 
 	void init()
 	{
-		TopBarYPositionOffset = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(2.0f, 0.0f, -1.0f, 4.00f, 5.35f, 3.17f, 1.0f, 5.35f, 6.35f);
-		yPos = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(16.0f, 14.0f, 13.3f, 18.0f, 19.4f, 17.17f, 15.0f, 14f, 21.2f);
-		yPosGap = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(3.0f, 2.5f, 2.5f, 3.0f, 3.0f, 3.0f, 2.75f, 3.0f, 3.0f);
-		buttonScale = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(1.3f, 1.0f, 1.0f, 1.3f, 1.3f, 1.3f, 1.15f, 1.3f, 1.3f);
-
+		TopBarYPositionOffset =MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+			6.0f,  
+			5.7f,  
+			5.35f,  
+			4.00f,  
+			3.8f,   
+			3.5f,  
+			3.2f,   
+			2.0f,   
+			0.0f,    
+			-1.0f,  
+			2.0f,   
+			1.0f,   
+			0.0f   
+		);
+		yPos = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+			22.0f, 
+			21.0f,  
+			21.2f, 
+			19.4f,  
+			19.0f, 
+			18.5f,  
+			18.0f,  
+			16.0f, 
+			14.0f, 
+			13.3f, 
+			16.0f, 
+			15.0f,  
+			14.0f   
+		);
+		yPosGap = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+			3.2f,   
+			3.1f,  
+			3.0f,  
+			3.0f,   
+			3.0f,   
+			3.0f,  
+			2.75f,  
+			3.0f,  
+			2.5f,  
+			2.5f,   
+			3.0f,  
+			2.75f,  
+			2.5f    
+		);
+		buttonScale = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+			1.35f,  
+			1.33f,  
+			1.3f,   
+			1.3f,   
+			1.3f,   
+			1.3f,   
+			1.15f, 
+			1.3f,  
+			1.0f,   
+			1.0f,  
+			1.3f,   
+			1.15f,  
+			1.0f    
+		);
+ 
 		Debug.Log("CurrentLoadedDeviceResolution: " + MultiplePlatformPortingHandler.Instance.CurrentLoadedDeviceResolution);
 
 		switch (MultiplePlatformPortingHandler.Instance.CurrentLoadedDeviceResolution)
 		{
-			case MyDeviceResolutions.Res_2_3:
+			case MyDeviceResolutions.Res_3_2:
 				xPosRight = 10.5f;
 				xPosLeft = -10.5f;
+				yPos = 10.0f;
 				break;
 			case MyDeviceResolutions.Res_19_5_9:
-				xPosRight = 8.2f;
-				xPosLeft = -8.2f;
+				xPosRight = 10.0f;
+				xPosLeft = -10.0f;
+				yPos = 17.4f;
+				mTittle.transform.position = new Vector3(0, MultiplePlatformPortingHandler.Instance.ScreenTop - 7.0f, 0);
+				break;
+			case MyDeviceResolutions.Res_21_9:
+				yPos = 19.0f;
+				mTittle.transform.position = new Vector3(0, MultiplePlatformPortingHandler.Instance.ScreenTop - 8.7f, 0);
+				break;
+			case MyDeviceResolutions.Res_20_9:
+				yPos = 19.0f;
+				mTittle.transform.position = new Vector3(0, MultiplePlatformPortingHandler.Instance.ScreenTop - 8.3f, 0);
+				break;
+			case MyDeviceResolutions.Res_22_9:
+				yPos = 19.0f;
+				mTittle.transform.position = new Vector3(0, MultiplePlatformPortingHandler.Instance.ScreenTop - 9.2f, 0);
+				break;
+			case MyDeviceResolutions.Res_16_10:
+				yPos = 8.0f;
+				this.gameObject.transform.position = new Vector3(0,4.0f,0);
+				break;
+			case MyDeviceResolutions.Res_5_3:
+				yPos = 12.8f;
+				mTittle.transform.position = new Vector3(0, MultiplePlatformPortingHandler.Instance.ScreenTop - 3.2f, 0);
+				break;
+			case MyDeviceResolutions.Res_16_9:
+				yPos = 13.0f;
+				mTittle.transform.position = new Vector3(0, MultiplePlatformPortingHandler.Instance.ScreenTop - 5.2f, 0);
+				break;
+			case MyDeviceResolutions.Res_18_9:
+				yPos = 16.5f;
+				mTittle.transform.position = new Vector3(0, MultiplePlatformPortingHandler.Instance.ScreenTop - 6.2f, 0);
+				break;
+			case MyDeviceResolutions.Res_18_5_9:
+				yPos = 17.0f;
+				mTittle.transform.position = new Vector3(0, MultiplePlatformPortingHandler.Instance.ScreenTop - 6.6f, 0);
+				break;
+			case MyDeviceResolutions.Res_19_9:
+				yPos = 17.0f;
+				mTittle.transform.position = new Vector3(0, MultiplePlatformPortingHandler.Instance.ScreenTop - 7.0f, 0);
+				break;
+			case MyDeviceResolutions.Res_10_7:
+				yPos = 9.5f;
 				break;
 			default:
 				break;
@@ -124,6 +222,9 @@ public class MainMenuLayer : MonoBehaviour
 			mScoreButton.setPosition(new Vector3(xPosLeft,yPos-yPosGap,0));
 			mAchievementsButton.setPosition(new Vector3(xPosLeft,yPos-yPosGap*2,0));
 			mSettingsButton.setPosition(new Vector3(xPosRight,yPos,0));	
+			
+ 			dailyBonus.transform.localScale = new Vector3(uiScale,uiScale,1);
+
 		}
 
 	}

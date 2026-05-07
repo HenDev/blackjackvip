@@ -7,21 +7,16 @@ public class PopUpManager : MonoBehaviour {
 	
 	public delegate void PopUpRemoveCallBack();
 	public PopUpRemoveCallBack mPopUpRemoveCallBack = null;
-	
 	public static PopUpManager mInstance = null;
-	
 	public GameObject moreChipsHandler = null;
 	public GameObject statsHandler = null;
 	public GameObject insufficientFundsHandler = null;
 	public GameObject settingsHandler = null;
-
 	public GameObject alphalayer = null;	
 	public bool isPopUpActive = false;
 	
-	// Use this for initialization
 	void Start () { StartCoroutine(Instantiate()); mInstance = this; alphalayer.GetComponent<AlphaLayerHandler>().fadeOutAlphaLayer(0.01f); }	
-	// Update is called once per frame
-	void Update () { }
+
 	
 	IEnumerator Instantiate()
 	{

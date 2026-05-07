@@ -80,22 +80,96 @@ public class BJ_BottomBar : MonoBehaviour {
 	void Start () {	
 		
 		currentChipsBalance = PlayerChipsBalance;
-		
-		topBarYPosHidden = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(35.0f, 31.0f, 29.0f, 39.0f, 41.5f, 37.25f, 34.0f, 41.5f, 44.5f);
-		topBarYposShown = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(33.0f, 29.0f, 27.0f, 37.0f, 39.5f, 35.25f, 32.0f, 39.5f, 42.5f);
-		float yPosOffset = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(3.0f, 4.95f, 6.0f, 1.0f, -0.3f, 1.85f, 3.8f, -0.3f, -1.3f);
-		transform.position += new Vector3(0,yPosOffset,0);
-		
+		topBarYPosHidden = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+			55.0f,   
+			52.0f,   
+			48.0f,  
+			47.0f,  
+			46.0f,  
+			45.0f,  
+			45.0f,  
+			37.5f,   
+			34.5f,  
+			32.7f,  
+			35.0f, 
+			33.0f,   
+			31.0f   
+		);
+		topBarYposShown = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+			50.4f,  
+			47.8f,   
+			45.36F,   
+			44.5f,   
+			43.0f,  
+			42.5f,  
+			40.5f,   
+			35.0f,  
+			32.3f,   
+			30.7f,  
+			33.0f, 
+			31.0f,  
+			29.0f    
+		);
+		float yPosOffset = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+			2.1f,  
+			2.1f,  
+			2.1f, 
+			2.1f, 
+			2.1f, 
+			2.1f,  
+			2.1f,   
+			2.1f,  
+			2.1f,  
+			2.1f,   
+			2.1f, 
+			2.1f,   
+			2.1f  
+		);
+		float top = MultiplePlatformPortingHandler.Instance.ScreenTop;
+		float posBottom =MultiplePlatformPortingHandler.Instance.ScreenBottom + yPosOffset;
+		transform.position = new Vector3(0,posBottom,0);
+		Debug.Log("Top: " + top);
 		if(mAdsBar != null)
 		{
-			if(Loading.IsAdsRemoved || Application.loadedLevelName == "MainMenuScene")
-				mAdsBar.transform.position = new Vector3(0, transform.position.y + topBarYposShown + 30, mAdsBar.transform.position.z);
+			if(Loading.IsAdsRemoved || Application.loadedLevelName == "2-MainMenuScene"){
+				mTopBarHolder_max.SetActive(false);
+				mTopBarHolder_min.SetActive(false);
+				mAdsBar.transform.position = new Vector3(0, top+yPosOffset, mAdsBar.transform.position.z);
+			}
 			else
 			{
-				yPosOffset = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(1.0f, 0.0f, 1.0f, 1.0f, 0.6f, 1.0f, 0.5f, 0.6f, 0.2f);
-				mAdsBar.transform.position = new Vector3(0, transform.position.y + topBarYposShown - yPosOffset, mAdsBar.transform.position.z);	
-				topBarYPosHidden -= MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(4.0f, 3.0f, 4.0f, 4.0f, 3.6f, 4.0f, 3.5f, 3.2f, 3.0f);
-				topBarYposShown -= MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(4.0f, 3.0f, 4.0f, 4.0f, 3.6f, 4.0f, 3.5f, 3.2f, 3.0f);			
+
+				topBarYPosHidden -= MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+					0.0f,   
+					0.0f,  
+					0.0f,  
+					0.0f,  
+					0.0f,   
+					0.0f,   
+					0.2f,  
+					0.0f,   
+					0.0f,   
+					0.0f,  
+					4.25f,   
+					4.4f,   
+					4.1f    
+				);
+				topBarYposShown -= MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+					0.0f,   
+					0.0f,   
+					0.0f,   
+					0.0f,  
+					0.0f,  
+					0.0f,  
+					0.0f, 
+					0.0f,  
+					0.0f,  
+					0.0f,  
+					4.25f,   
+					4.4f,   
+					4.1f    
+				); 
+				mAdsBar.transform.position = new Vector3(0, top - yPosOffset, mAdsBar.transform.position.z);	
 			}
 		}
 		
@@ -109,8 +183,7 @@ public class BJ_BottomBar : MonoBehaviour {
 	
 	void init()
 	{
-		if((Application.isLoadingLevel && Application.loadedLevelName == "MainMenuScene") ||
-			(!Application.isLoadingLevel && Application.loadedLevelName == "MainMenuScene"))
+		if(Application.loadedLevelName == "2-MainMenuScene")
 		{
 			// Main Menu
 			initMenuBar();
@@ -122,7 +195,6 @@ public class BJ_BottomBar : MonoBehaviour {
 		}
 	}
 	
-	// Android Buttons
 	protected void checkAndroidKeys()
 	{
 		if(mBackButton != null && mBackButton.isTouchEnabled() && BJ_GamePlayLayer.mInstance != null && Input.GetKeyDown(KeyCode.Escape)) // Back Button
@@ -166,7 +238,6 @@ public class BJ_BottomBar : MonoBehaviour {
 	{	
 		mChipsBarHolder.SetActive(true);
 		
-		// Create Buttons for Chips
 		float yAxis = -0.15f;
 		float xGap = 4.0f;
 		mArrChipsButtons = new MenuButton[5];
@@ -355,7 +426,7 @@ public class BJ_BottomBar : MonoBehaviour {
 	{
 		if(mIsTopBarActive) return;		
 		// Top Bar Movement		
-		moveTopBarTo(new Vector2(0, transform.position.y + topBarYposShown), 0.5f, 3.0f, EaseType.EaseOut, null, mTopBarHolder_max);
+		moveTopBarTo(new Vector2(0, transform.position.y +   topBarYposShown), 0.5f, 3.0f, EaseType.EaseOut, null, mTopBarHolder_max);
 	}
 	
 	// Top Bar For Min Limit
@@ -363,7 +434,7 @@ public class BJ_BottomBar : MonoBehaviour {
 	{
 		if(mIsTopBarActive) return;		
 		// Top Bar Movement		
-		moveTopBarTo(new Vector2(0, transform.position.y + topBarYposShown), 0.5f, 3.0f, EaseType.EaseOut, null, mTopBarHolder_min);
+		moveTopBarTo(new Vector2(0, transform.position.y +  topBarYposShown), 0.5f, 3.0f, EaseType.EaseOut, null, mTopBarHolder_min);
 	}
 	
 	void moveTopBarTo(Vector2 position, float duration, float delayDuration, EaseType easeActionType, CCallFunc.CallBack callBack, GameObject topBar)
@@ -388,11 +459,11 @@ public class BJ_BottomBar : MonoBehaviour {
 	
 	void removeTopBarMax()
 	{
-		moveTopBarTo(new Vector2(0,transform.position.y + topBarYPosHidden), 0.5f, 0.0f, EaseType.EaseIn, topBarRemoved, mTopBarHolder_max);
+		moveTopBarTo(new Vector2(0, transform.position.y + topBarYPosHidden), 0.5f, 0.0f, EaseType.EaseIn, topBarRemoved, mTopBarHolder_max);
 	}
 	void removeTopBarMin()
 	{
-		moveTopBarTo(new Vector2(0,transform.position.y + topBarYPosHidden), 0.5f, 0.0f, EaseType.EaseIn, topBarRemoved, mTopBarHolder_min);
+		moveTopBarTo(new Vector2(0,transform.position.y +  topBarYPosHidden), 0.5f, 0.0f, EaseType.EaseIn, topBarRemoved, mTopBarHolder_min);
 	}
 	
 	void topBarRemoved()

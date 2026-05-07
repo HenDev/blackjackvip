@@ -20,6 +20,24 @@ public class TouchHandler : MonoBehaviour {
 	private bool mIsTouchCancled = false;
 	// Static Object for handling
 	private static TouchHandler mSharedHandler = null;
+	
+	private void Awake()
+	{
+		if(mSharedHandler != null && mSharedHandler != this)
+		{
+			Destroy(gameObject);
+			return;
+		}
+		
+		mSharedHandler = this;
+		DontDestroyOnLoad(gameObject);
+	}
+	
+	private void OnDestroy()
+	{
+		if(mSharedHandler == this) mSharedHandler = null;
+	}
+	
 	// Use this for initialization
 	void Start () {	}	
 	// Update is called once per frame
@@ -30,8 +48,7 @@ public class TouchHandler : MonoBehaviour {
 	{
 		if(mSharedHandler == null)
 		{
-			GameObject touchHandler = new GameObject();
-			touchHandler.name = "TouchHandler";
+			GameObject touchHandler = new GameObject("TouchHandler");
 			mSharedHandler = touchHandler.AddComponent<TouchHandler>();
 		}
 		return mSharedHandler;

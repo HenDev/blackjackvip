@@ -30,18 +30,22 @@ public class CLabelAtlas : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(!mInitialized) init();
+		if(Application.isPlaying)
+			if(!mInitialized) init();
 	}
 	
 	// Init Function
 	public void init()		
 	{
 		mInitialized = true;
-		CLabelAtlas label = create(mString,mSpriteManager,mSpriteAtlasDataHandler,mFontFileName,mZorder,mCurrentTextAlignment);
-		label.addParent(gameObject);
-		gameObject.GetComponent<CLabelAtlas>().enabled = false;
-		_labelAtlas = label;
-		_labelAtlas.setSpacing(mLineSpacing);
+		if (Application.isPlaying)
+		{
+			CLabelAtlas label = create(mString,mSpriteManager,mSpriteAtlasDataHandler,mFontFileName,mZorder,mCurrentTextAlignment);
+			label.addParent(gameObject);
+			gameObject.GetComponent<CLabelAtlas>().enabled = false;
+			_labelAtlas = label;
+			_labelAtlas.setSpacing(mLineSpacing);
+		}
 	}
 	
 	public void init(string _strValue, LinkedSpriteManager _spriteManager, SpriteAtlasDataHandler _spriteAtlasDataHandler, string _fontFileName, int _zOrder, LabelTextAlignment _alignment)

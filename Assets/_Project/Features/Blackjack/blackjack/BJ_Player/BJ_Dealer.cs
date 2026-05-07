@@ -12,13 +12,75 @@ public class BJ_Dealer : BJ_CardsDealSpot {
 	{			
 		if(!Loading.IsAdsRemoved)
 		{
-			InitPosition = transform.localPosition + new Vector3(0, MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(0.0f, -2.0f, -3.0f, 0.0f, 3.0f, 0.0f, -1.0f, 3.0f, 4.5f), 0);
-			transform.position += new Vector3(0, MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(0.0f, -2.0f, -3.0f, 0.0f, 3.0f, 0.0f, -1.0f, 3.0f, 4.5f), 0);
+			InitPosition = transform.localPosition + new Vector3(0,
+				MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+					4.8f,   
+					4.6f,   
+					4.5f,  
+					3.0f,  
+					2.5f,  
+					2.0f,   
+					0.0f,  
+					0.0f,  
+					-2.0f, 
+					-3.0f, 
+					0.0f,   
+					-1.0f, 
+					-2.0f   
+				), 0);
+			transform.position += new Vector3(0,
+				MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+					4.8f,  
+					4.6f,  
+					4.5f,  
+					3.0f,   
+					2.5f,   
+					2.0f,  
+					0.0f,   
+					0.0f,   
+					-2.0f,  
+					-3.0f, 
+					0.0f,  
+					-1.0f,  
+					-2.0f    
+				), 0);
+
 		}
 		else
 		{
-			InitPosition = transform.localPosition + new Vector3(0, MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(0.0f, 0.0f, 0.0f, 4.0f, 4.0f, 2.0f, 0.0f, 4.0f, 5.5f), 0);
-			transform.position += new Vector3(0, MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(0.0f, 0.0f, 0.0f, 4.0f, 4.0f, 2.0f, 0.0f, 4.0f, 5.5f), 0);
+			InitPosition = transform.localPosition + new Vector3(0,
+				MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+					5.8f,  
+					5.6f,   
+					5.5f,  
+					4.0f,  
+					3.8f,  
+					3.5f,   
+					4.0f,   
+					0.0f,   
+					0.0f,  
+					0.0f,   
+					0.0f,   
+					0.0f,  
+					0.0f    
+				), 0);
+			transform.position += new Vector3(0,
+				MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+					5.8f,   
+					5.6f,  
+					5.5f,   
+					4.0f,  
+					3.8f,   
+					3.5f,  
+					4.0f,  
+					0.0f,  
+					0.0f,   
+					0.0f,  
+					0.0f,   
+					0.0f,  
+					0.0f   
+				), 0);
+
 		}		
 		
 		createCardCountDisplay();

@@ -14,14 +14,26 @@ public class PopUpBase : MonoBehaviour {
 	protected bool IsInitDone = false;
 	protected bool IsHideStarted = false;
 	
-	// Use this for initialization
-	void Start () { }	
-	// Update is called once per frame
-	void Update () { }
+ 
 	
 	public virtual void init()
-	{		
-		popUpYpos = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(33.0f, 30.0f, 33.0f, 36.0f, 37.0f, 34.0f, 31.5f, 37.0f, 39.0f);
+	{	
+		popUpYpos = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+			60.0f,  
+			60.0f,  
+			48.0f, 
+			48.0f,  
+			48.0f,  
+			46.0f, 
+			44.0f, 
+			40.0f,  
+			35.0f,  
+			33.0f,  
+			33.0f,  
+			32f,  
+			30.0f   
+		);
+
 		transform.position = new Vector3(0,popUpYpos, transform.position.z);
 		
 		mBackButton = MenuButtonManager.sharedManager().createMenuItem("Back_Button.png", "Back_Button_Pressed.png", "", "", 2, mSpriteManager, mSpriteAtlasDataHandler, backSelected);

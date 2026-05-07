@@ -40,7 +40,22 @@ public class TableHandler : MonoBehaviour {
 	
 	public void createTableWith()
 	{
-		float yOffset = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(1.0f, 1.0f, Loading.IsAdsRemoved?1.0f:0.0f, 2.0f, 3.0f, Loading.IsAdsRemoved?2.0f:1.0f, 1.0f, 3.5f, 4.0f);
+		float yOffset = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+			4.2f,  
+			3.8f,   
+			4.0f,  
+			3.5f,  
+			3.2f,  
+			2.8f,   
+			2.5f,   
+			2.0f,  
+			1.0f,   
+			1.0f,  
+			Loading.IsAdsRemoved ? 1.0f : 0.0f, 
+			Loading.IsAdsRemoved ? 2.0f : 1.0f,
+			1.0f    
+		);
+
 		mTableText.transform.position += new Vector3(0, yOffset, 0);
 		
 		min_Bet = minBet;
@@ -50,8 +65,24 @@ public class TableHandler : MonoBehaviour {
 		mTableDesign.SetActive(isTableDesign);
 		
 		if(isInsuranceDesign)
-		{			
-			float yPos = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(4.4f, 4.4f, Loading.IsAdsRemoved?4.4f:3.4f, 5.4f, 6.4f, Loading.IsAdsRemoved?5.4f:4.4f, 4.4f, 7.0f, Loading.IsAdsRemoved?6.2f:5.2f);
+		{
+			float yPos =  MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(
+				7.2f,  
+				6.8f,  
+				Loading.IsAdsRemoved ? 6.2f : 5.2f, 
+				6.4f,  
+				6.0f,   
+				5.7f,  
+				5.4f,   
+				4.4f,  
+				4.4f, 
+				Loading.IsAdsRemoved ? 4.4f : 3.4f, 
+				Loading.IsAdsRemoved ? 5.4f : 4.4f,
+				4.4f,   
+				4.4f    
+			);
+
+		//	float yPos = MultiplePlatformPortingHandler.Instance.GetPositionBasedOnDeviceResolution(4.4f, 4.4f, Loading.IsAdsRemoved?4.4f:3.4f, 5.4f, 6.4f, Loading.IsAdsRemoved?5.4f:4.4f, 4.4f, 7.0f, Loading.IsAdsRemoved?6.2f:5.2f);
 			GameObject insuranceDesignLeft = CommonData.createGameObject("InsuranceDesign_Left", gameObject, new Vector3(7,yPos,0), mSpriteManager, mSpriteAtlasDataHandler, "InsuranceProp.png", 0);
 			insuranceDesignLeft.layer = gameObject.layer;
 			

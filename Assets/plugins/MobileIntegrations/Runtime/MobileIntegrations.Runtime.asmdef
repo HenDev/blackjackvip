@@ -1,0 +1,58 @@
+{
+    "name":  "MobileIntegrations.Runtime",
+    "rootNamespace":  "MobileIntegrations",
+    "references":  [
+                       "Unity.LevelPlay",
+                       "Unity.Notifications.Android",
+                       "Unity.Notifications.iOS",
+                       "Unity.Purchasing"
+                   ],
+    "includePlatforms":  [
+
+                         ],
+    "excludePlatforms":  [
+
+                         ],
+    "allowUnsafeCode":  false,
+    "overrideReferences":  false,
+    "precompiledReferences":  [
+
+                              ],
+    "autoReferenced":  true,
+    "defineConstraints":  [
+
+                          ],
+    "versionDefines":  [
+                           {
+                               "name":  "com.unity.services.levelplay",
+                               "expression":  "",
+                               "define":  "MOBILE_INTEGRATIONS_HAS_LEVELPLAY"
+                           },
+                           {
+                               "name":  "com.unity.purchasing",
+                               "expression":  "",
+                               "define":  "MOBILE_INTEGRATIONS_HAS_UNITY_IAP"
+                           },
+                           {
+                               "name":  "com.unity.mobile.notifications",
+                               "expression":  "",
+                               "define":  "MOBILE_INTEGRATIONS_HAS_MOBILE_NOTIFICATIONS"
+                           },
+                           {
+                               "name":  "com.google.ads.mobile",
+                               "expression":  "",
+                               "define":  "MOBILE_INTEGRATIONS_HAS_GOOGLE_MOBILE_ADS"
+                           },
+                           {
+                               "name":  "com.google.play.review",
+                               "expression":  "",
+                               "define":  "MOBILE_INTEGRATIONS_HAS_GOOGLE_PLAY_REVIEW"
+                           },
+                           {
+                               "name":  "com.google.play.appupdate",
+                               "expression":  "",
+                               "define":  "MOBILE_INTEGRATIONS_HAS_GOOGLE_PLAY_APPUPDATE"
+                           }
+                       ],
+    "noEngineReferences":  false
+}
