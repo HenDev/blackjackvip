@@ -12,9 +12,6 @@ public class iOSInterfaceHandler : ExternalInterfaceHandler
 	
 	[DllImport ("__Internal")]
 	private static extern void _FullScreenAds();
-	
-	[DllImport ("__Internal")]
-	private static extern void _BannerAds(bool isVisible,bool isOnTop);
 
 	[DllImport ("__Internal")]
 	private static extern void _SendScore(int id , float score);
@@ -45,6 +42,40 @@ public class iOSInterfaceHandler : ExternalInterfaceHandler
 	
 	[DllImport ("__Internal")]
 	private static extern void _MoreGames();
+
+	static AdsManager FindAdsManager()
+	{
+		AdsManager adsManager = UnityEngine.Object.FindFirstObjectByType<AdsManager>();
+		if (adsManager == null)
+		{
+			GameObject mobileManager = GameObject.Find("MobileManager");
+			if (mobileManager != null)
+			{
+				adsManager = mobileManager.GetComponent<AdsManager>();
+			}
+		}
+
+		return adsManager;
+	}
+
+	private static void _BannerAds(bool isVisible,bool isOnTop)
+	{
+		AdsManager adsManager = FindAdsManager();
+		if (adsManager == null)
+		{
+			Debug.LogWarning("iOSInterfaceHandler: AdsManager not found. Banner request ignored.");
+			return;
+		}
+
+		if (isVisible)
+		{
+			adsManager.ShowBanner(isOnTop);
+		}
+		else
+		{
+			adsManager.HideBanner();
+		}
+	}
 	
 	
 #endif

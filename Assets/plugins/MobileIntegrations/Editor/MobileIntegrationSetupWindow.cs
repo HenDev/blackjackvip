@@ -105,6 +105,8 @@ public class MobileIntegrationSetupWindow : EditorWindow
             DrawStatusRow("iOS rewarded ad unit", _config != null && HasIosRewardedAdUnitId());
             DrawStatusRow("Android interstitial ad unit", _config != null && HasAndroidInterstitialAdUnitId());
             DrawStatusRow("iOS interstitial ad unit", _config != null && HasIosInterstitialAdUnitId());
+            DrawStatusRow("Android banner ad unit", _config != null && HasAndroidBannerAdUnitId());
+            DrawStatusRow("iOS banner ad unit", _config != null && HasIosBannerAdUnitId());
             DrawStatusRow("Android Google Mobile Ads App ID", _config != null && HasAndroidGoogleMobileAdsAppId());
             DrawStatusRow("iOS Google Mobile Ads App ID", _config != null && HasIosGoogleMobileAdsAppId());
             DrawStatusRow("MobileManager in scene", GameObject.Find("MobileManager") != null);
@@ -268,8 +270,11 @@ public class MobileIntegrationSetupWindow : EditorWindow
             DrawProperty("iosRewardedAdUnitId");
             DrawProperty("androidInterstitialAdUnitId");
             DrawProperty("iosInterstitialAdUnitId");
+            DrawProperty("androidBannerAdUnitId");
+            DrawProperty("iosBannerAdUnitId");
             DrawProperty("rewardedPlacement");
             DrawProperty("interstitialPlacement");
+            DrawProperty("bannerPlacement");
 
             EditorGUILayout.Space(6f);
             EditorGUILayout.LabelField("Google Mobile Ads", EditorStyles.boldLabel);
@@ -636,6 +641,16 @@ public class MobileIntegrationSetupWindow : EditorWindow
     private bool HasIosInterstitialAdUnitId()
     {
         return !string.IsNullOrWhiteSpace(_config.iosInterstitialAdUnitId);
+    }
+
+    private bool HasAndroidBannerAdUnitId()
+    {
+        return !string.IsNullOrWhiteSpace(_config.androidBannerAdUnitId);
+    }
+
+    private bool HasIosBannerAdUnitId()
+    {
+        return !string.IsNullOrWhiteSpace(_config.iosBannerAdUnitId);
     }
 
     private bool HasAndroidGoogleMobileAdsAppId()

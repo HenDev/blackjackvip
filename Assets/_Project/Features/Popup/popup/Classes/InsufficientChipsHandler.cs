@@ -51,7 +51,7 @@ public class InsufficientChipsHandler : PopUpBase {
 	void buyNowSelected()
 	{
 		PlayAudioSounds.sharedHandler().playSound("ButtonSelect");
-		movePopUpTo(30.0f, EaseType.EaseOut, popUpRemoved);
+		movePopUpTo(60.0f, EaseType.EaseOut, popUpRemoved);
 		PopUpManager.mInstance.showPopUp(PopUpManager.PopUpType.MoreChips, PopUpManager.mInstance.mPopUpRemoveCallBack);
 	}
 	

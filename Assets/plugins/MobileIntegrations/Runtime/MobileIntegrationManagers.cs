@@ -31,6 +31,7 @@ public class AdsManager : MonoBehaviour
     public bool IsInitialized { get; private set; }
     public bool IsRewardedReady { get; private set; }
     public bool IsInterstitialReady { get; private set; }
+    public bool IsBannerReady { get; private set; }
     public string LastError { get; private set; }
     private bool _initializationRequested;
 
@@ -67,6 +68,36 @@ public class AdsManager : MonoBehaviour
     public void LoadInterstitial()
     {
         LevelPlayAdsProvider.LoadInterstitial(this);
+    }
+
+    public void LoadBanner(bool isOnTop)
+    {
+        LevelPlayAdsProvider.LoadBanner(this, isOnTop);
+    }
+
+    public void ShowBannerTop()
+    {
+        ShowBanner(true);
+    }
+
+    public void ShowBannerBottom()
+    {
+        ShowBanner(false);
+    }
+
+    public void ShowBanner(bool isOnTop)
+    {
+        LevelPlayAdsProvider.ShowBanner(this, isOnTop);
+    }
+
+    public void HideBanner()
+    {
+        LevelPlayAdsProvider.HideBanner(this);
+    }
+
+    public void DestroyBanner()
+    {
+        LevelPlayAdsProvider.DestroyBanner(this);
     }
 
     public void ShowInterstitial()
@@ -128,6 +159,17 @@ public class AdsManager : MonoBehaviour
             Debug.Log(isReady
                 ? "AdsManager: interstitial ready. " + reason
                 : "AdsManager: interstitial unavailable. " + reason);
+        }
+    }
+
+    internal void SetBannerReady(bool isReady, string reason = null)
+    {
+        IsBannerReady = isReady;
+        if (!string.IsNullOrWhiteSpace(reason))
+        {
+            Debug.Log(isReady
+                ? "AdsManager: banner ready. " + reason
+                : "AdsManager: banner unavailable. " + reason);
         }
     }
 
@@ -766,6 +808,5 @@ public class InternetChecker : MonoBehaviour
         }
     }
 }
-
 
 

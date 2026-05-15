@@ -25,8 +25,11 @@ public class MobileIntegrationConfig : ScriptableObject
     public string iosRewardedAdUnitId;
     public string androidInterstitialAdUnitId;
     public string iosInterstitialAdUnitId;
+    public string androidBannerAdUnitId;
+    public string iosBannerAdUnitId;
     public string rewardedPlacement = "rewarded_default";
     public string interstitialPlacement = "interstitial_default";
+    public string bannerPlacement = "banner_default";
     public string customAdsPackage;
 
     [Header("Google Mobile Ads")]
@@ -102,6 +105,22 @@ public class MobileIntegrationConfig : ScriptableObject
         }
 
         return iosInterstitialAdUnitId;
+#endif
+    }
+
+    public string GetLevelPlayBannerAdUnitId()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        return androidBannerAdUnitId;
+#elif UNITY_IOS && !UNITY_EDITOR
+        return iosBannerAdUnitId;
+#else
+        if (!string.IsNullOrWhiteSpace(androidBannerAdUnitId))
+        {
+            return androidBannerAdUnitId;
+        }
+
+        return iosBannerAdUnitId;
 #endif
     }
 }

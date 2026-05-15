@@ -39,13 +39,37 @@ public class AndroidinterfaceHandler : ExternalInterfaceHandler
 		adsManager.ShowInterstitial();
 	}
 	
-	public static void _BannerAds(bool isVisible,bool isOnTop) {
-		/*if(isVisible) {
-			javaClass.CallStatic("showBanner", isOnTop, getCurrentActivity());
+	static AdsManager FindAdsManager()
+	{
+		AdsManager adsManager = UnityEngine.Object.FindFirstObjectByType<AdsManager>();
+		if (adsManager == null)
+		{
+			GameObject mobileManager = GameObject.Find("MobileManager");
+			if (mobileManager != null)
+			{
+				adsManager = mobileManager.GetComponent<AdsManager>();
+			}
 		}
-		else {
-			javaClass.CallStatic("hideBanner", isOnTop, getCurrentActivity());
-		}*/
+
+		return adsManager;
+	}
+
+	public static void _BannerAds(bool isVisible,bool isOnTop) {
+		AdsManager adsManager = FindAdsManager();
+		if (adsManager == null)
+		{
+			Debug.LogWarning("AndroidinterfaceHandler: AdsManager not found. Banner request ignored.");
+			return;
+		}
+
+		if (isVisible)
+		{
+			adsManager.ShowBanner(isOnTop);
+		}
+		else
+		{
+			adsManager.HideBanner();
+		}
 	}
 	
 	public static void _SendScore(int id, int score) {

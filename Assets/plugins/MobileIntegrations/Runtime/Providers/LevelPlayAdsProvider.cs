@@ -64,6 +64,22 @@ internal static class LevelPlayAdsProvider
 #endif
     }
 
+    public static void LoadBanner(AdsManager manager, bool isOnTop)
+    {
+#if MOBILE_INTEGRATIONS_HAS_LEVELPLAY
+        LevelPlayAdsBridge bridge = manager.GetComponent<LevelPlayAdsBridge>();
+        if (bridge == null)
+        {
+            manager.NotifyAdFailure("LevelPlay bridge is missing.");
+            return;
+        }
+
+        bridge.LoadBanner(isOnTop);
+#else
+        manager.NotifyAdFailure("LevelPlay package is not installed.");
+#endif
+    }
+
     public static void ShowRewarded(AdsManager manager, string placement)
     {
 #if MOBILE_INTEGRATIONS_HAS_LEVELPLAY
@@ -96,6 +112,54 @@ internal static class LevelPlayAdsProvider
 #endif
     }
 
+    public static void ShowBanner(AdsManager manager, bool isOnTop)
+    {
+#if MOBILE_INTEGRATIONS_HAS_LEVELPLAY
+        LevelPlayAdsBridge bridge = manager.GetComponent<LevelPlayAdsBridge>();
+        if (bridge == null)
+        {
+            manager.NotifyAdFailure("LevelPlay bridge is missing.");
+            return;
+        }
+
+        bridge.ShowBanner(isOnTop);
+#else
+        manager.NotifyAdFailure("LevelPlay package is not installed.");
+#endif
+    }
+
+    public static void HideBanner(AdsManager manager)
+    {
+#if MOBILE_INTEGRATIONS_HAS_LEVELPLAY
+        LevelPlayAdsBridge bridge = manager.GetComponent<LevelPlayAdsBridge>();
+        if (bridge == null)
+        {
+            manager.NotifyAdFailure("LevelPlay bridge is missing.");
+            return;
+        }
+
+        bridge.HideBanner();
+#else
+        manager.NotifyAdFailure("LevelPlay package is not installed.");
+#endif
+    }
+
+    public static void DestroyBanner(AdsManager manager)
+    {
+#if MOBILE_INTEGRATIONS_HAS_LEVELPLAY
+        LevelPlayAdsBridge bridge = manager.GetComponent<LevelPlayAdsBridge>();
+        if (bridge == null)
+        {
+            manager.NotifyAdFailure("LevelPlay bridge is missing.");
+            return;
+        }
+
+        bridge.DestroyBanner();
+#else
+        manager.NotifyAdFailure("LevelPlay package is not installed.");
+#endif
+    }
+
     public static void LaunchTestSuite(AdsManager manager)
     {
 #if MOBILE_INTEGRATIONS_HAS_LEVELPLAY
@@ -119,6 +183,10 @@ internal sealed class LevelPlayAdsBridge : MonoBehaviour
     private AdsManager _manager;
     private LevelPlayRewardedAd _rewardedAd;
     private LevelPlayInterstitialAd _interstitialAd;
+    private LevelPlayBannerAd _bannerAd;
+    private bool _isBannerLoaded;
+    private bool _isBannerOnTop;
+    private bool _bannerDisplayOnLoad;
     private bool _subscribedToSdkEvents;
 
     public void Initialize(AdsManager manager)
@@ -164,6 +232,19 @@ internal sealed class LevelPlayAdsBridge : MonoBehaviour
         }
 
         _interstitialAd.LoadAd();
+    }
+
+    public void LoadBanner(bool isOnTop)
+    {
+        LevelPlayBannerAd bannerAd = CreateBannerAd(isOnTop, false);
+        if (bannerAd == null)
+        {
+            return;
+        }
+
+        _isBannerLoaded = false;
+        _manager.SetBannerReady(false, "Banner ad loading.");
+        bannerAd.LoadAd();
     }
 
     public void ShowRewarded(string placement)
@@ -218,6 +299,60 @@ internal sealed class LevelPlayAdsBridge : MonoBehaviour
         {
             _interstitialAd.ShowAd(placement);
         }
+    }
+
+    public void ShowBanner(bool isOnTop)
+    {
+        LevelPlayBannerAd bannerAd = CreateBannerAd(isOnTop, true);
+        if (bannerAd == null)
+        {
+            return;
+        }
+
+        if (_isBannerLoaded)
+        {
+            bannerAd.ShowAd();
+            return;
+        }
+
+        if (!_bannerDisplayOnLoad)
+        {
+            DestroyBanner();
+            bannerAd = CreateBannerAd(isOnTop, true);
+            if (bannerAd == null)
+            {
+                return;
+            }
+        }
+
+        _manager.SetBannerReady(false, "Banner ad loading.");
+        bannerAd.LoadAd();
+    }
+
+    public void HideBanner()
+    {
+        if (_bannerAd == null)
+        {
+            _manager.NotifyAdFailure("Banner ad is not initialized.");
+            return;
+        }
+
+        _bannerAd.HideAd();
+    }
+
+    public void DestroyBanner()
+    {
+        if (_bannerAd == null)
+        {
+            return;
+        }
+
+        UnsubscribeBannerEvents(_bannerAd);
+        _bannerAd.DestroyAd();
+        _bannerAd = null;
+        _isBannerLoaded = false;
+        _bannerDisplayOnLoad = false;
+        _manager.SetBannerReady(false, "Banner ad destroyed.");
     }
 
     public void LaunchTestSuite()
@@ -288,6 +423,65 @@ internal sealed class LevelPlayAdsBridge : MonoBehaviour
         _interstitialAd.OnAdClosed += OnInterstitialClosed;
     }
 
+    private LevelPlayBannerAd CreateBannerAd(bool isOnTop, bool displayOnLoad)
+    {
+        if (string.IsNullOrWhiteSpace(_manager.config.GetLevelPlayBannerAdUnitId()))
+        {
+            _manager.NotifyAdFailure("Banner ad unit id is missing or SDK is not initialized.");
+            return null;
+        }
+
+        if (_bannerAd != null && _isBannerOnTop == isOnTop)
+        {
+            return _bannerAd;
+        }
+
+        DestroyBanner();
+
+        LevelPlayBannerPosition position = isOnTop
+            ? LevelPlayBannerPosition.TopCenter
+            : LevelPlayBannerPosition.BottomCenter;
+
+        LevelPlayBannerAd.Config config = new LevelPlayBannerAd.Config.Builder()
+            .SetSize(LevelPlayAdSize.BANNER)
+            .SetPosition(position)
+            .SetPlacementName(_manager.config.bannerPlacement)
+            .SetDisplayOnLoad(displayOnLoad)
+            .SetRespectSafeArea(true)
+            .Build();
+
+        _bannerAd = new LevelPlayBannerAd(_manager.config.GetLevelPlayBannerAdUnitId(), config);
+        _isBannerOnTop = isOnTop;
+        _bannerDisplayOnLoad = displayOnLoad;
+        _isBannerLoaded = false;
+        SubscribeBannerEvents(_bannerAd);
+        return _bannerAd;
+    }
+
+    private void SubscribeBannerEvents(LevelPlayBannerAd bannerAd)
+    {
+        bannerAd.OnAdLoaded += OnBannerLoaded;
+        bannerAd.OnAdLoadFailed += OnBannerLoadFailed;
+        bannerAd.OnAdDisplayed += OnBannerDisplayed;
+        bannerAd.OnAdDisplayFailed += OnBannerDisplayFailed;
+        bannerAd.OnAdClicked += OnBannerClicked;
+        bannerAd.OnAdCollapsed += OnBannerCollapsed;
+        bannerAd.OnAdExpanded += OnBannerExpanded;
+        bannerAd.OnAdLeftApplication += OnBannerLeftApplication;
+    }
+
+    private void UnsubscribeBannerEvents(LevelPlayBannerAd bannerAd)
+    {
+        bannerAd.OnAdLoaded -= OnBannerLoaded;
+        bannerAd.OnAdLoadFailed -= OnBannerLoadFailed;
+        bannerAd.OnAdDisplayed -= OnBannerDisplayed;
+        bannerAd.OnAdDisplayFailed -= OnBannerDisplayFailed;
+        bannerAd.OnAdClicked -= OnBannerClicked;
+        bannerAd.OnAdCollapsed -= OnBannerCollapsed;
+        bannerAd.OnAdExpanded -= OnBannerExpanded;
+        bannerAd.OnAdLeftApplication -= OnBannerLeftApplication;
+    }
+
     private void OnRewardedLoaded(LevelPlayAdInfo adInfo)
     {
         _manager.SetRewardedReady(true, "Rewarded ad loaded.");
@@ -345,6 +539,48 @@ internal sealed class LevelPlayAdsBridge : MonoBehaviour
         LoadInterstitial();
     }
 
+    private void OnBannerLoaded(LevelPlayAdInfo adInfo)
+    {
+        _isBannerLoaded = true;
+        _manager.SetBannerReady(true, "Banner ad loaded.");
+    }
+
+    private void OnBannerLoadFailed(LevelPlayAdError error)
+    {
+        _isBannerLoaded = false;
+        _manager.SetBannerReady(false, error != null ? error.ToString() : "Banner ad load failed.");
+    }
+
+    private void OnBannerDisplayed(LevelPlayAdInfo adInfo)
+    {
+        _manager.SetBannerReady(true, "Banner ad displayed.");
+    }
+
+    private void OnBannerDisplayFailed(LevelPlayAdInfo adInfo, LevelPlayAdError error)
+    {
+        _manager.SetBannerReady(false, error != null ? error.ToString() : "Banner ad display failed.");
+    }
+
+    private void OnBannerClicked(LevelPlayAdInfo adInfo)
+    {
+        Debug.Log("AdsManager: banner clicked.");
+    }
+
+    private void OnBannerCollapsed(LevelPlayAdInfo adInfo)
+    {
+        Debug.Log("AdsManager: banner collapsed.");
+    }
+
+    private void OnBannerExpanded(LevelPlayAdInfo adInfo)
+    {
+        Debug.Log("AdsManager: banner expanded.");
+    }
+
+    private void OnBannerLeftApplication(LevelPlayAdInfo adInfo)
+    {
+        Debug.Log("AdsManager: banner left application.");
+    }
+
     private void OnDestroy()
     {
         if (_subscribedToSdkEvents)
@@ -372,6 +608,12 @@ internal sealed class LevelPlayAdsBridge : MonoBehaviour
             _interstitialAd.OnAdDisplayFailed -= OnInterstitialDisplayFailed;
             _interstitialAd.OnAdClosed -= OnInterstitialClosed;
             _interstitialAd.DestroyAd();
+        }
+
+        if (_bannerAd != null)
+        {
+            UnsubscribeBannerEvents(_bannerAd);
+            _bannerAd.DestroyAd();
         }
     }
 }
