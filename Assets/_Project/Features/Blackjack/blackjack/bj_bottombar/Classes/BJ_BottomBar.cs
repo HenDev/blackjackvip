@@ -42,7 +42,7 @@ public class BJ_BottomBar : MonoBehaviour {
 	MenuButton mYesButton = null;
 	MenuButton mNoButton = null;
 	MenuButton mAddChipsButton = null;
-	MenuButton[] mArrChipsButtons = null;
+	public MenuButton[] mArrChipsButtons = null;
 	MenuButton mAdsRemoveButton = null;
 //	MenuButton mRestorePrchaseButton = null;
 //	MenuToggleButton mSoundsButton = null;
@@ -251,13 +251,14 @@ public class BJ_BottomBar : MonoBehaviour {
 			markerButton.setTag(i+TableHandler.startChipIndex);
 			markerButton.setTouchEnable(false);
 			markerButton.gameObject.layer = gameObject.layer;
+			markerButton.gameObject.AddComponent<ChipDragger>();
 			mArrChipsButtons[i] = markerButton;			
-		}			
-		showChips();
-	}
+			}			
+			showChips();
+			}
 	
-	void createBonusDisplay()
-	{
+			void createBonusDisplay()
+{
 		bonusTimerHolder = CommonData.createGameObject("Bonus Timer Holder", gameObject, new Vector3(0,-1.1f,-3), mSpriteManager, mSpriteAtlasDataHandler, "TimerHolder.png", 3);
 		bonusTimerHolder.layer = gameObject.layer;
 		
@@ -885,7 +886,7 @@ public class BJ_BottomBar : MonoBehaviour {
 		BJ_GamePlayLayer.mInstance.getCurrentPlayerToDeal().surrenderTheHand();		
 	}
 	
-	void chipsSelected(MenuButton sender)
+	public void chipsSelected(MenuButton sender)
 	{
 		PlayAudioSounds.sharedHandler().playSound("ChipPlaced");
 		int index = sender.getTag();
@@ -948,14 +949,14 @@ public class BJ_BottomBar : MonoBehaviour {
 		mCurrentSelectedChipIndex = index;
 	}
 	
-	void disableAllChipsButtons()
+	public void disableAllChipsButtons()
 	{
 		if(mArrChipsButtons == null) return;
 		foreach(MenuButton chipButton in mArrChipsButtons)
 			chipButton.setTouchEnable(false);
 	}
 	
-	void enableAllChipsButtons()
+	public void enableAllChipsButtons()
 	{
 		if(mArrChipsButtons == null) return;
 		foreach(MenuButton chipButton in mArrChipsButtons)
@@ -982,10 +983,10 @@ public class BJ_BottomBar : MonoBehaviour {
 		call.actionWithCallBack(enableAllChipsButtons);
 		seq.actionWithActions(move, call);
 		seq.runAction();
-	}
+		}
 	
-	public void hideChips()
-	{
+		public void hideChips()
+		{
 		if(mChipsBarHolder == null || !mIsChipsVisible) return;
 		mIsChipsVisible = false;
 		if(mChipsBarHolder.GetComponent<CMoveTo>() != null)
@@ -1003,7 +1004,7 @@ public class BJ_BottomBar : MonoBehaviour {
 		call.actionWithCallBack(disableAllChipsButtons);
 		seq.actionWithActions(move, call);
 		seq.runAction();
-	}
+		}
 	
 	// Getters
 	public float getCurrentSelectedChipValue()

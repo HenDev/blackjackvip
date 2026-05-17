@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class BJ_Player : MonoBehaviour {
@@ -34,7 +34,7 @@ public class BJ_Player : MonoBehaviour {
 	
 	ArrayList arrPlayerBetChipsHolder = null;
 	
-	GameObject mPlayerBetChips = null;
+	public GameObject mPlayerBetChips = null;
 	GameObject mDoubledPlaceHolder = null;
 	GameObject mInsurancePlaceHolder = null;
 	GameObject mPayoutPlaceHolder = null;
@@ -121,7 +121,8 @@ public class BJ_Player : MonoBehaviour {
 		if(arrPlayerBetChipsHolder == null) arrPlayerBetChipsHolder = new ArrayList();
 		mPlayerBetChips = CommonData.createEmptyGameObject("PlacedChipsHolder", gameObject, Vector3.zero);
 		arrPlayerBetChipsHolder.Add(mPlayerBetChips);
-		mPlayerBetChips.AddComponent<BoxCollider>();
+		BoxCollider collider = mPlayerBetChips.AddComponent<BoxCollider>();
+		collider.size = new Vector3(8.0f, 8.0f, 1.0f);
 	}
 	
 	public void rebetTheChips()
@@ -195,6 +196,7 @@ public class BJ_Player : MonoBehaviour {
 	
 	public void reloadPlayer()
 	{
+		ChipDragger.ForceCleanupAll();
 		removeAllActivePlayers();
 		if(!isBetPlaced) prevBetsPlaced = new ArrayList();
 		isBetPlaced = false;

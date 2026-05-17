@@ -153,7 +153,7 @@ public class MenuButton : MonoBehaviour {
 		}			
 	}
 	
-	private void changeSprite(string _imageName)
+	public void changeSprite(string _imageName)
 	{
 		if(_isRemoved) return;
 		SpriteData sprData = gameObject.GetComponent<SpriteData>();

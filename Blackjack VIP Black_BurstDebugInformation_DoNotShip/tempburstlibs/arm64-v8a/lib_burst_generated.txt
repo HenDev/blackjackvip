@@ -1,0 +1,18 @@
+Library: D:\Desarrollo\Unity\BlackJackVipBlack\BalckJack new\BlackJackVipBlack\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
+--platform=Android
+--minimum-os-version=
+--backend=burst-llvm-19
+--target=ARMV8A_AARCH64
+--global-safety-checks-setting=Off
+--meta-data-generation=False
+--dump=Function
+--float-precision=Standard
+--target-framework=NetFramework
+--generate-link-xml=Temp\burst.link.xml
+--temp-folder=D:\Desarrollo\Unity\BlackJackVipBlack\BalckJack new\BlackJackVipBlack\Temp\Burst
+--key-folder=D:/Programas/Unity/6000.3.10f1/Editor/Data/PlaybackEngines/AndroidPlayer
+--decode-folder=D:\Desarrollo\Unity\BlackJackVipBlack\BalckJack new\BlackJackVipBlack\Library\Burst
+--output=D:\Desarrollo\Unity\BlackJackVipBlack\BalckJack new\BlackJackVipBlack\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
+--pdb-search-paths=Temp/ManagedSymbols/
+
+

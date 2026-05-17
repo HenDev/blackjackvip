@@ -270,4 +270,9 @@ public class SpriteData : MonoBehaviour
 		if(mIdealAnimation != ""){ runAnimationWithAnimationName(mIdealAnimation); }
 		else{ changeSprite(_SpriteFrameName); }
 	}
-}
+
+	void OnDestroy()
+	{
+		removeSprite();
+	}
+	}
